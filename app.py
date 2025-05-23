@@ -187,9 +187,6 @@ if uploaded_file:
                 st.markdown(f"**Match Percentage:** `{match_percent}%`")
                 st.progress(match_percent)
 
-                st.markdown(f"**Match Percentage:** `{match_percent}%`")
-                st.progress(match_percent)
-
                 st.markdown(f"**Explore Latest Oppurtunities:** [LinkedIn]({linkedin_jobs}) &nbsp;|&nbsp; [Glassdoor]({glassdoor_jobs}) &nbsp;|&nbsp; [Indeed]({indeed_jobs})")
 
                 col1, col2, col3 = st.columns(3)
