@@ -1,0 +1,7 @@
+First imported the job postings dataset and done with profiling
+found 965 duplicate rows - need to treat them
+
+convert everything to lower case standardize
+generate report and complete EDA
+
+repeat for skillsets data
