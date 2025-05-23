@@ -2,7 +2,7 @@
 import streamlit as st
 import tempfile
 import os
-import fitz  # PyMuPDF
+import fitz
 import plotly.graph_objects as go
 from extractor.exportpdf import generate_pdf_report
 from extractor.skill_extractor import extract_skills_from_pdf
@@ -10,7 +10,6 @@ from prediction import predict_top_roles_domains, get_gap_skills
 import plotly.io as pio
 pio.kaleido.scope.default_format = "png"
 
-# Replace with your actual descriptions
 ROLE_DESCRIPTIONS = {
     "Data Scientist": "Analyze data to gain insights and build predictive models.",
     "Machine Learning Engineer": "Develop ML models and integrate them into products.",
@@ -33,7 +32,6 @@ ROLE_DESCRIPTIONS = {
     "Data Architect": "Design the structure of complex data systems.",
     "Knowledge Engineer": "Model domain knowledge for AI systems and expert systems."
 }
-
 
 DOMAIN_DESCRIPTIONS = {
     "Healthcare": "Domain focusing on health and medical applications.",
@@ -73,8 +71,6 @@ DOMAIN_DESCRIPTIONS = {
     "Information Security": "Domain concentrating on protecting data and systems from cyber threats."
 }
 
-
-# ------------------ Streamlit Config ------------------ #
 # ------------------ Streamlit Config ------------------ #
 st.set_page_config(page_title="SkillFit: Analyze, Match & Upskill", layout="wide")
 
@@ -91,8 +87,6 @@ st.markdown(
 )
 
 st.markdown("---")
-
-
 
 # ------------------ Sidebar Upload + Preview ------------------ #
 st.sidebar.header("Upload Resume / LinkedIn Profile")
@@ -159,7 +153,7 @@ if uploaded_file:
         st.plotly_chart(fig, use_container_width=True)
 
         # ------------ Skill Gap Insights ---------------- #
-        top_n = min(3, len(top_5))  # Ensure we don’t exceed available roles
+        top_n = min(3, len(top_5))  
 
         # Prepare gap info list for report and display
         gap_info_list = []
@@ -179,15 +173,24 @@ if uploaded_file:
             domain_desc = DOMAIN_DESCRIPTIONS.get(domain, "No description available for this domain.")
 
             with st.expander(f"Rank {i+1}: {role} | {domain}"):
+                role_query = role.replace(" ", "+") + "+" + domain.replace(" ", "+")
+                linkedin_jobs = f"https://www.linkedin.com/jobs/search/?keywords={role_query}"
+                indeed_jobs = f"https://www.indeed.com/jobs?q={role_query}"
+                glassdoor_jobs = f"https://www.glassdoor.com/Job/jobs.htm?sc.keyword={role_query}"
+
                 st.markdown(
                     f"<b>{role}</b> <span title='{role_desc}' style='cursor: help;'>ℹ️</span> | "
                     f"<b>{domain}</b> <span title='{domain_desc}' style='cursor: help;'>ℹ️</span>",
                     unsafe_allow_html=True,
                 )
-
                 match_percent = int(score * 100)
                 st.markdown(f"**Match Percentage:** `{match_percent}%`")
                 st.progress(match_percent)
+
+                st.markdown(f"**Match Percentage:** `{match_percent}%`")
+                st.progress(match_percent)
+
+                st.markdown(f"**Explore Latest Oppurtunities:** [LinkedIn]({linkedin_jobs}) &nbsp;|&nbsp; [Glassdoor]({glassdoor_jobs}) &nbsp;|&nbsp; [Indeed]({indeed_jobs})")
 
                 col1, col2, col3 = st.columns(3)
                 with col1:
