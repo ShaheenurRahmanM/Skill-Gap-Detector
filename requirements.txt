@@ -3,3 +3,6 @@ PyMuPDF
 scikit-learn
 pandas
 numpy
+plotly
+matplotlib
+scipy
